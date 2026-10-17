@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone } from "@/components/app-shell";
+import { Parcel3D } from "@/components/parcel-3d";
 import courier from "@/assets/courier.jpg";
 
 export const Route = createFileRoute("/")({
@@ -28,6 +29,14 @@ function Onboarding() {
       <div className="pointer-events-none absolute -right-6 top-64 size-24 rounded-full bg-primary/25 animate-float" />
       <div className="pointer-events-none absolute left-[-20%] top-[40%] size-40 rounded-full bg-primary/10 animate-float-slow" />
 
+      {/* Mini floating 3D parcels in the sky */}
+      <div className="pointer-events-none absolute left-6 top-28 z-10 opacity-90">
+        <Parcel3D size="sm" variant="float" />
+      </div>
+      <div className="pointer-events-none absolute right-8 top-48 z-10 opacity-70">
+        <Parcel3D size="sm" variant="tilt" />
+      </div>
+
       <div className="relative flex justify-end px-6 pt-6 animate-enter-fade">
         <Link
           to="/login"
@@ -38,12 +47,12 @@ function Onboarding() {
       </div>
 
       <div className="relative flex flex-1 items-end justify-center px-6 animate-enter-up stagger-1">
-        <div className="relative">
+        <div className="relative perspective-scene">
           <div className="absolute -inset-4 rounded-[2rem] bg-primary/15 blur-2xl animate-glow-pulse" />
           <img
             src={courier}
             alt="Smiling courier holding a parcel"
-            className="relative max-h-[480px] w-full rounded-3xl object-cover shadow-soft"
+            className="relative max-h-[420px] w-full rounded-3xl object-cover shadow-3d animate-tilt-idle"
           />
         </div>
       </div>
@@ -61,7 +70,7 @@ function Onboarding() {
           </div>
           <Link
             to="/login"
-            className="grid size-16 place-items-center rounded-full bg-ink text-xl font-bold text-ink-foreground shadow-glow animate-glow-pulse pressable transition-transform hover:scale-105"
+            className="grid size-16 place-items-center rounded-full bg-ink text-xl font-bold text-ink-foreground shadow-glow-lg animate-glow-pulse pressable transition-transform hover:scale-110"
           >
             1
           </Link>

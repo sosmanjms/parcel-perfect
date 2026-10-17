@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScanLine } from "lucide-react";
 import { Phone, TopBar } from "@/components/app-shell";
-import boxPin from "@/assets/box-pin.png";
+import { Parcel3D } from "@/components/parcel-3d";
 
 export const Route = createFileRoute("/scan")({
   head: () => ({
@@ -20,7 +20,7 @@ function Scan() {
     <Phone>
       <TopBar title="Box Scan" menu />
       <div className="px-6 pt-4 text-center animate-enter-up">
-        <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-3xl bg-secondary p-6 neon-border">
+        <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-3xl bg-secondary p-6 neon-border perspective-scene">
           {[
             "left-3 top-3 border-l-4 border-t-4 rounded-tl-2xl",
             "right-3 top-3 border-r-4 border-t-4 rounded-tr-2xl",
@@ -29,14 +29,12 @@ function Scan() {
           ].map((c) => (
             <span key={c} className={`absolute size-10 border-primary ${c}`} />
           ))}
-          <img
-            src={boxPin}
-            alt="Parcel"
-            className="h-full w-full object-contain opacity-80 animate-float"
-          />
+          <div className="flex h-full items-center justify-center">
+            <Parcel3D size="md" variant="float" />
+          </div>
           {/* Futuristic scan laser */}
-          <span className="absolute inset-x-8 h-0.5 bg-primary shadow-[0_0_12px_2px] shadow-primary/80 animate-scan-line" />
-          <span className="absolute inset-x-6 h-8 bg-gradient-to-b from-primary/20 to-transparent animate-scan-line pointer-events-none" />
+          <span className="absolute inset-x-8 h-0.5 bg-primary shadow-[0_0_12px_2px] shadow-primary/80 animate-scan-line z-10" />
+          <span className="absolute inset-x-6 h-8 bg-gradient-to-b from-primary/20 to-transparent animate-scan-line pointer-events-none z-10" />
         </div>
         <p className="mt-6 text-muted-foreground animate-enter-fade stagger-2">
           Align the code on the box inside the frame

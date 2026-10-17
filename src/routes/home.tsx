@@ -48,10 +48,10 @@ function HomePage() {
           <span className="flex-1 text-sm">Track your parcel</span>
           <QrCode className="size-5 text-foreground" />
         </Link>
-        <div className="mt-4 grid grid-cols-2 gap-3 animate-enter-up stagger-3">
+        <div className="mt-4 grid grid-cols-2 gap-3 animate-enter-up stagger-3 perspective-scene">
           <Link
             to="/send"
-            className="flex items-center gap-3 rounded-2xl bg-card p-4 font-semibold text-foreground hover-lift pressable neon-border"
+            className="flex items-center gap-3 rounded-2xl bg-card p-4 font-semibold text-foreground hover-tilt pressable neon-border"
           >
             <span className="grid size-9 place-items-center rounded-full bg-accent text-primary">
               <Send className="size-4" />
@@ -60,7 +60,7 @@ function HomePage() {
           </Link>
           <Link
             to="/tracking"
-            className="flex items-center gap-3 rounded-2xl bg-card p-4 font-semibold text-foreground hover-lift pressable neon-border"
+            className="flex items-center gap-3 rounded-2xl bg-card p-4 font-semibold text-foreground hover-tilt pressable neon-border"
           >
             <span className="grid size-9 place-items-center rounded-full bg-accent text-primary">
               <MapPin className="size-4" />
@@ -75,12 +75,12 @@ function HomePage() {
           <h2 className="text-lg font-bold">Active delivery</h2>
           <span className="text-sm text-muted-foreground">See all</span>
         </div>
-        <div className="mt-4 space-y-4">
+        <div className="mt-4 space-y-4 perspective-scene">
           {deliveries.map((d, i) => (
             <Link
               key={d.id}
               to="/tracking"
-              className={`block rounded-3xl border bg-card p-4 shadow-soft hover-lift pressable animate-enter-up stagger-${i + 4}`}
+              className={`block rounded-3xl border bg-card p-4 shadow-soft hover-tilt pressable animate-enter-3d stagger-${i + 4}`}
             >
               <div className="flex items-center gap-3">
                 <img

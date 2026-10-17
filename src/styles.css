@@ -40,13 +40,20 @@
   --shadow-glow: 0 12px 28px -8px color-mix(in oklab, var(--primary) 55%, transparent);
   --shadow-glow-lg: 0 0 40px -4px color-mix(in oklab, var(--primary) 45%, transparent),
     0 12px 32px -10px color-mix(in oklab, var(--primary) 35%, transparent);
+  --shadow-3d: 0 25px 50px -12px oklch(0.15 0 0 / 0.35),
+    0 12px 20px -8px oklch(0.15 0 0 / 0.2);
   --animate-float: float 4s ease-in-out infinite;
   --animate-float-slow: float 7s ease-in-out infinite;
+  --animate-float-3d: float-3d 5s ease-in-out infinite;
+  --animate-float-3d-alt: float-3d-alt 6.5s ease-in-out infinite;
+  --animate-tilt-idle: tilt-idle 6s ease-in-out infinite;
+  --animate-spin-y: spin-y 8s linear infinite;
   --animate-glow-pulse: glow-pulse 2.4s ease-in-out infinite;
   --animate-shimmer: shimmer 2.2s linear infinite;
   --animate-enter-up: enter-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-enter-scale: enter-scale 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-enter-fade: enter-fade 0.45s ease-out both;
+  --animate-enter-3d: enter-3d 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-route-dash: route-dash 1.4s linear infinite;
   --animate-scan-line: scan-line 2s ease-in-out infinite;
   --animate-orbit: orbit 8s linear infinite;
@@ -54,6 +61,7 @@
   --animate-bounce-soft: bounce-soft 2.5s ease-in-out infinite;
   --animate-gradient: gradient-shift 6s ease infinite;
   --animate-spin-slow: spin 12s linear infinite;
+  --animate-shadow-pulse: shadow-pulse 5s ease-in-out infinite;
 }
 
 :root {
@@ -103,6 +111,71 @@
   }
   50% {
     transform: translateY(-12px);
+  }
+}
+
+@keyframes float-3d {
+  0%,
+  100% {
+    transform: translateY(0) translateZ(0) rotateX(8deg) rotateY(-12deg);
+  }
+  33% {
+    transform: translateY(-16px) translateZ(20px) rotateX(4deg) rotateY(8deg);
+  }
+  66% {
+    transform: translateY(-8px) translateZ(10px) rotateX(12deg) rotateY(-6deg);
+  }
+}
+
+@keyframes float-3d-alt {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(6deg) rotateY(10deg);
+  }
+  50% {
+    transform: translateY(-18px) rotateX(-4deg) rotateY(-14deg);
+  }
+}
+
+@keyframes tilt-idle {
+  0%,
+  100% {
+    transform: perspective(800px) rotateX(2deg) rotateY(-3deg);
+  }
+  50% {
+    transform: perspective(800px) rotateX(-2deg) rotateY(3deg);
+  }
+}
+
+@keyframes spin-y {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes shadow-pulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.75);
+    opacity: 0.2;
+  }
+}
+
+@keyframes enter-3d {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(40px) rotateX(12deg) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) translateY(0) rotateX(0) scale(1);
   }
 }
 
@@ -245,12 +318,46 @@
   background-size: 48px 48px;
 }
 
+@utility perspective-scene {
+  perspective: 1000px;
+  perspective-origin: 50% 40%;
+  transform-style: preserve-3d;
+}
+
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
 @utility animate-float {
   animation: var(--animate-float);
 }
 
 @utility animate-float-slow {
   animation: var(--animate-float-slow);
+}
+
+@utility animate-float-3d {
+  animation: var(--animate-float-3d);
+  transform-style: preserve-3d;
+}
+
+@utility animate-float-3d-alt {
+  animation: var(--animate-float-3d-alt);
+  transform-style: preserve-3d;
+}
+
+@utility animate-tilt-idle {
+  animation: var(--animate-tilt-idle);
+  transform-style: preserve-3d;
+}
+
+@utility animate-spin-y {
+  animation: var(--animate-spin-y);
+  transform-style: preserve-3d;
+}
+
+@utility animate-shadow-pulse {
+  animation: var(--animate-shadow-pulse);
 }
 
 @utility animate-glow-pulse {
@@ -278,6 +385,11 @@
 
 @utility animate-enter-fade {
   animation: var(--animate-enter-fade);
+}
+
+@utility animate-enter-3d {
+  animation: var(--animate-enter-3d);
+  transform-style: preserve-3d;
 }
 
 @utility animate-route-dash {
@@ -313,7 +425,6 @@
   animation: blob-morph 8s ease-in-out infinite;
 }
 
-/* Stagger delays for children */
 @utility stagger-1 {
   animation-delay: 0.05s;
 }
@@ -333,7 +444,6 @@
   animation-delay: 0.44s;
 }
 
-/* Interactive polish */
 @utility pressable {
   transition:
     transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
@@ -347,13 +457,25 @@
 
 @utility hover-lift {
   transition:
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.25s ease;
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
 }
 @utility hover-lift {
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px) scale(1.01);
     box-shadow: var(--shadow-glow);
+  }
+}
+
+/* 3D tilt on hover — works with pointer devices */
+@utility hover-tilt {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  transform-style: preserve-3d;
+}
+@utility hover-tilt {
+  &:hover {
+    transform: perspective(800px) rotateX(4deg) rotateY(-6deg) translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-3d), var(--shadow-glow);
   }
 }
 
@@ -392,7 +514,6 @@
   }
 }
 
-/* Progress bar that looks alive */
 @utility progress-live {
   background: linear-gradient(
     90deg,
@@ -404,7 +525,98 @@
   animation: progress-flow 1.5s linear infinite;
 }
 
-/* Respect user preference */
+/* CSS-only 3D package box */
+.parcel-3d {
+  position: relative;
+  width: 120px;
+  height: 100px;
+  transform-style: preserve-3d;
+  margin: 0 auto;
+}
+
+.parcel-3d__face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.parcel-3d__front {
+  width: 120px;
+  height: 100px;
+  background: linear-gradient(145deg, oklch(0.78 0.12 55), oklch(0.65 0.16 45));
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.25);
+  transform: translateZ(40px);
+}
+
+.parcel-3d__back {
+  width: 120px;
+  height: 100px;
+  background: oklch(0.55 0.12 45);
+  border-radius: 8px;
+  transform: rotateY(180deg) translateZ(40px);
+}
+
+.parcel-3d__left {
+  width: 80px;
+  height: 100px;
+  background: linear-gradient(90deg, oklch(0.58 0.14 48), oklch(0.5 0.12 45));
+  left: 20px;
+  transform: rotateY(-90deg) translateZ(60px);
+}
+
+.parcel-3d__right {
+  width: 80px;
+  height: 100px;
+  background: linear-gradient(90deg, oklch(0.7 0.14 50), oklch(0.6 0.13 48));
+  left: 20px;
+  transform: rotateY(90deg) translateZ(60px);
+}
+
+.parcel-3d__top {
+  width: 120px;
+  height: 80px;
+  background: linear-gradient(180deg, oklch(0.82 0.1 55), oklch(0.72 0.13 50));
+  top: 10px;
+  transform: rotateX(90deg) translateZ(50px);
+}
+
+.parcel-3d__tape {
+  position: absolute;
+  background: color-mix(in oklab, var(--primary) 85%, white);
+  opacity: 0.9;
+}
+
+.parcel-3d__tape--h {
+  width: 100%;
+  height: 14px;
+  top: 43%;
+  left: 0;
+}
+
+.parcel-3d__tape--v {
+  width: 14px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.parcel-float-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  width: 90px;
+  height: 18px;
+  background: radial-gradient(ellipse, oklch(0.2 0 0 / 0.35) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: shadow-pulse 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
