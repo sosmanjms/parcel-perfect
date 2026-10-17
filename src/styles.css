@@ -62,6 +62,13 @@
   --animate-gradient: gradient-shift 6s ease infinite;
   --animate-spin-slow: spin 12s linear infinite;
   --animate-shadow-pulse: shadow-pulse 5s ease-in-out infinite;
+  --animate-aurora: aurora 12s ease infinite;
+  --animate-twinkle: twinkle 3s ease-in-out infinite;
+  --animate-rise: rise 8s linear infinite;
+  --animate-ring-pulse: ring-pulse 2.5s ease-out infinite;
+  --animate-text-glow: text-glow 3s ease-in-out infinite;
+  --animate-magnetic: magnetic 3s ease-in-out infinite;
+  --animate-mover: mover 6s ease-in-out infinite;
 }
 
 :root {
@@ -93,9 +100,7 @@
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
+  * { border-color: var(--color-border); }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -105,83 +110,36 @@
 
 /* ========== Keyframes ========== */
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
-
 @keyframes float-3d {
-  0%,
-  100% {
-    transform: translateY(0) translateZ(0) rotateX(8deg) rotateY(-12deg);
-  }
-  33% {
-    transform: translateY(-16px) translateZ(20px) rotateX(4deg) rotateY(8deg);
-  }
-  66% {
-    transform: translateY(-8px) translateZ(10px) rotateX(12deg) rotateY(-6deg);
-  }
+  0%, 100% { transform: translateY(0) translateZ(0) rotateX(8deg) rotateY(-12deg); }
+  33% { transform: translateY(-16px) translateZ(20px) rotateX(4deg) rotateY(8deg); }
+  66% { transform: translateY(-8px) translateZ(10px) rotateX(12deg) rotateY(-6deg); }
 }
-
 @keyframes float-3d-alt {
-  0%,
-  100% {
-    transform: translateY(0) rotateX(6deg) rotateY(10deg);
-  }
-  50% {
-    transform: translateY(-18px) rotateX(-4deg) rotateY(-14deg);
-  }
+  0%, 100% { transform: translateY(0) rotateX(6deg) rotateY(10deg); }
+  50% { transform: translateY(-18px) rotateX(-4deg) rotateY(-14deg); }
 }
-
 @keyframes tilt-idle {
-  0%,
-  100% {
-    transform: perspective(800px) rotateX(2deg) rotateY(-3deg);
-  }
-  50% {
-    transform: perspective(800px) rotateX(-2deg) rotateY(3deg);
-  }
+  0%, 100% { transform: perspective(800px) rotateX(2deg) rotateY(-3deg); }
+  50% { transform: perspective(800px) rotateX(-2deg) rotateY(3deg); }
 }
-
 @keyframes spin-y {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
 }
-
 @keyframes shadow-pulse {
-  0%,
-  100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.35;
-  }
-  50% {
-    transform: translateX(-50%) scale(0.75);
-    opacity: 0.2;
-  }
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.35; }
+  50% { transform: translateX(-50%) scale(0.75); opacity: 0.2; }
 }
-
 @keyframes enter-3d {
-  from {
-    opacity: 0;
-    transform: perspective(900px) translateY(40px) rotateX(12deg) scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: perspective(900px) translateY(0) rotateX(0) scale(1);
-  }
+  from { opacity: 0; transform: perspective(900px) translateY(40px) rotateX(12deg) scale(0.94); }
+  to { opacity: 1; transform: perspective(900px) translateY(0) rotateX(0) scale(1); }
 }
-
 @keyframes glow-pulse {
-  0%,
-  100% {
+  0%, 100% {
     box-shadow: 0 0 16px -4px color-mix(in oklab, var(--primary) 40%, transparent),
       0 8px 24px -8px color-mix(in oklab, var(--primary) 30%, transparent);
   }
@@ -190,123 +148,95 @@
       0 12px 36px -6px color-mix(in oklab, var(--primary) 50%, transparent);
   }
 }
-
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
-
 @keyframes enter-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes enter-scale {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
-
 @keyframes enter-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-
 @keyframes route-dash {
-  to {
-    stroke-dashoffset: -24;
-  }
+  to { stroke-dashoffset: -24; }
 }
-
 @keyframes scan-line {
-  0%,
-  100% {
-    top: 12%;
-    opacity: 0.3;
-  }
-  50% {
-    top: 82%;
-    opacity: 1;
-  }
+  0%, 100% { top: 12%; opacity: 0.3; }
+  50% { top: 82%; opacity: 1; }
 }
-
 @keyframes orbit {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-
 @keyframes ping-soft {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  75%,
-  100% {
-    transform: scale(1.8);
-    opacity: 0;
-  }
+  0% { transform: scale(1); opacity: 0.6; }
+  75%, 100% { transform: scale(1.8); opacity: 0; }
 }
-
 @keyframes bounce-soft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
-
 @keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
-
 @keyframes blob-morph {
-  0%,
-  100% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
-  50% {
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
 }
-
 @keyframes progress-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+@keyframes aurora {
+  0%, 100% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+  50% { background-position: 100% 50%; filter: hue-rotate(15deg); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+@keyframes rise {
+  0% { transform: translateY(100%) scale(0.5); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-120vh) scale(1); opacity: 0; }
+}
+@keyframes ring-pulse {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  70% { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+@keyframes text-glow {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 20px color-mix(in oklab, var(--primary) 50%, transparent); }
+}
+@keyframes magnetic {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+@keyframes mover {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+@keyframes letter-in {
+  from { opacity: 0; transform: translateY(0.6em) rotateX(40deg); }
+  to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+@keyframes energy-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes border-dance {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* ========== Utilities ========== */
@@ -323,47 +253,28 @@
   perspective-origin: 50% 40%;
   transform-style: preserve-3d;
 }
+@utility preserve-3d { transform-style: preserve-3d; }
 
-@utility preserve-3d {
-  transform-style: preserve-3d;
-}
-
-@utility animate-float {
-  animation: var(--animate-float);
-}
-
-@utility animate-float-slow {
-  animation: var(--animate-float-slow);
-}
-
+@utility animate-float { animation: var(--animate-float); }
+@utility animate-float-slow { animation: var(--animate-float-slow); }
 @utility animate-float-3d {
   animation: var(--animate-float-3d);
   transform-style: preserve-3d;
 }
-
 @utility animate-float-3d-alt {
   animation: var(--animate-float-3d-alt);
   transform-style: preserve-3d;
 }
-
 @utility animate-tilt-idle {
   animation: var(--animate-tilt-idle);
   transform-style: preserve-3d;
 }
-
 @utility animate-spin-y {
   animation: var(--animate-spin-y);
   transform-style: preserve-3d;
 }
-
-@utility animate-shadow-pulse {
-  animation: var(--animate-shadow-pulse);
-}
-
-@utility animate-glow-pulse {
-  animation: var(--animate-glow-pulse);
-}
-
+@utility animate-shadow-pulse { animation: var(--animate-shadow-pulse); }
+@utility animate-glow-pulse { animation: var(--animate-glow-pulse); }
 @utility animate-shimmer {
   background: linear-gradient(
     90deg,
@@ -374,91 +285,52 @@
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
 }
-
-@utility animate-enter-up {
-  animation: var(--animate-enter-up);
-}
-
-@utility animate-enter-scale {
-  animation: var(--animate-enter-scale);
-}
-
-@utility animate-enter-fade {
-  animation: var(--animate-enter-fade);
-}
-
+@utility animate-enter-up { animation: var(--animate-enter-up); }
+@utility animate-enter-scale { animation: var(--animate-enter-scale); }
+@utility animate-enter-fade { animation: var(--animate-enter-fade); }
 @utility animate-enter-3d {
   animation: var(--animate-enter-3d);
   transform-style: preserve-3d;
 }
-
-@utility animate-route-dash {
-  animation: var(--animate-route-dash);
-}
-
-@utility animate-scan-line {
-  animation: var(--animate-scan-line);
-}
-
-@utility animate-orbit {
-  animation: var(--animate-orbit);
-}
-
-@utility animate-ping-soft {
-  animation: var(--animate-ping-soft);
-}
-
-@utility animate-bounce-soft {
-  animation: var(--animate-bounce-soft);
-}
-
+@utility animate-route-dash { animation: var(--animate-route-dash); }
+@utility animate-scan-line { animation: var(--animate-scan-line); }
+@utility animate-orbit { animation: var(--animate-orbit); }
+@utility animate-ping-soft { animation: var(--animate-ping-soft); }
+@utility animate-bounce-soft { animation: var(--animate-bounce-soft); }
 @utility animate-gradient {
   background-size: 200% 200%;
   animation: var(--animate-gradient);
 }
+@utility animate-spin-slow { animation: var(--animate-spin-slow); }
+@utility animate-blob { animation: blob-morph 8s ease-in-out infinite; }
+@utility animate-aurora {
+  background-size: 300% 300%;
+  animation: var(--animate-aurora);
+}
+@utility animate-twinkle { animation: var(--animate-twinkle); }
+@utility animate-rise { animation: var(--animate-rise); }
+@utility animate-ring-pulse { animation: var(--animate-ring-pulse); }
+@utility animate-text-glow { animation: var(--animate-text-glow); }
+@utility animate-magnetic { animation: var(--animate-magnetic); }
 
-@utility animate-spin-slow {
-  animation: var(--animate-spin-slow);
-}
-
-@utility animate-blob {
-  animation: blob-morph 8s ease-in-out infinite;
-}
-
-@utility stagger-1 {
-  animation-delay: 0.05s;
-}
-@utility stagger-2 {
-  animation-delay: 0.12s;
-}
-@utility stagger-3 {
-  animation-delay: 0.2s;
-}
-@utility stagger-4 {
-  animation-delay: 0.28s;
-}
-@utility stagger-5 {
-  animation-delay: 0.36s;
-}
-@utility stagger-6 {
-  animation-delay: 0.44s;
-}
+@utility stagger-1 { animation-delay: 0.05s; }
+@utility stagger-2 { animation-delay: 0.12s; }
+@utility stagger-3 { animation-delay: 0.2s; }
+@utility stagger-4 { animation-delay: 0.28s; }
+@utility stagger-5 { animation-delay: 0.36s; }
+@utility stagger-6 { animation-delay: 0.44s; }
+@utility stagger-7 { animation-delay: 0.52s; }
+@utility stagger-8 { animation-delay: 0.6s; }
 
 @utility pressable {
-  transition:
-    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
 }
 @utility pressable {
-  &:active {
-    transform: scale(0.97);
-  }
+  &:active { transform: scale(0.97); }
 }
 
 @utility hover-lift {
-  transition:
-    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
 }
 @utility hover-lift {
   &:hover {
@@ -467,7 +339,6 @@
   }
 }
 
-/* 3D tilt on hover — works with pointer devices */
 @utility hover-tilt {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
   transform-style: preserve-3d;
@@ -485,9 +356,7 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-@utility neon-border {
-  position: relative;
-}
+@utility neon-border { position: relative; }
 @utility neon-border {
   &::before {
     content: "";
@@ -502,12 +371,10 @@
       transparent 60%,
       color-mix(in oklab, var(--primary) 40%, transparent)
     );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    background-size: 200% 200%;
+    animation: border-dance 4s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
@@ -525,7 +392,104 @@
   animation: progress-flow 1.5s linear infinite;
 }
 
-/* CSS-only 3D package box */
+/* Aurora background wash */
+@utility aurora-bg {
+  background: linear-gradient(
+    125deg,
+    color-mix(in oklab, var(--primary) 12%, transparent),
+    color-mix(in oklab, var(--accent) 20%, transparent),
+    color-mix(in oklab, var(--primary) 8%, transparent),
+    oklch(0.95 0.04 80 / 0.3)
+  );
+  background-size: 300% 300%;
+  animation: var(--animate-aurora);
+}
+
+/* Energy button ring */
+@utility energy-btn {
+  position: relative;
+  overflow: visible;
+}
+@utility energy-btn {
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 2px solid color-mix(in oklab, var(--primary) 50%, transparent);
+    animation: ring-pulse 2.5s ease-out infinite;
+    pointer-events: none;
+  }
+  &::after {
+    animation-delay: 0.8s;
+  }
+}
+
+/* Letter stagger for headlines */
+.text-reveal span {
+  display: inline-block;
+  animation: letter-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Particle field */
+.particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: rise var(--dur, 8s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  left: var(--x, 50%);
+  bottom: -10px;
+  width: var(--size, 4px);
+  height: var(--size, 4px);
+  opacity: 0;
+  box-shadow: 0 0 6px color-mix(in oklab, var(--primary) 60%, transparent);
+}
+
+/* Orbit ring with dots */
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in oklab, var(--primary) 30%, transparent);
+  animation: orbit var(--orbit-dur, 12s) linear infinite;
+  pointer-events: none;
+}
+.orbit-dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+/* Map route mover (dot traveling along path via offset-path) */
+.route-mover {
+  offset-path: path("M120 140 C 180 220, 160 320, 230 380 S 260 520, 300 560");
+  offset-rotate: 0deg;
+  animation: mover 5s ease-in-out infinite;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow:
+    0 0 12px 4px color-mix(in oklab, var(--primary) 70%, transparent),
+    0 0 24px 8px color-mix(in oklab, var(--primary) 30%, transparent);
+}
+
+/* 3D parcel */
 .parcel-3d {
   position: relative;
   width: 120px;
@@ -533,7 +497,6 @@
   transform-style: preserve-3d;
   margin: 0 auto;
 }
-
 .parcel-3d__face {
   position: absolute;
   display: flex;
@@ -541,7 +504,6 @@
   justify-content: center;
   backface-visibility: hidden;
 }
-
 .parcel-3d__front {
   width: 120px;
   height: 100px;
@@ -550,7 +512,6 @@
   box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.25);
   transform: translateZ(40px);
 }
-
 .parcel-3d__back {
   width: 120px;
   height: 100px;
@@ -558,7 +519,6 @@
   border-radius: 8px;
   transform: rotateY(180deg) translateZ(40px);
 }
-
 .parcel-3d__left {
   width: 80px;
   height: 100px;
@@ -566,7 +526,6 @@
   left: 20px;
   transform: rotateY(-90deg) translateZ(60px);
 }
-
 .parcel-3d__right {
   width: 80px;
   height: 100px;
@@ -574,7 +533,6 @@
   left: 20px;
   transform: rotateY(90deg) translateZ(60px);
 }
-
 .parcel-3d__top {
   width: 120px;
   height: 80px;
@@ -582,20 +540,17 @@
   top: 10px;
   transform: rotateX(90deg) translateZ(50px);
 }
-
 .parcel-3d__tape {
   position: absolute;
   background: color-mix(in oklab, var(--primary) 85%, white);
   opacity: 0.9;
 }
-
 .parcel-3d__tape--h {
   width: 100%;
   height: 14px;
   top: 43%;
   left: 0;
 }
-
 .parcel-3d__tape--v {
   width: 14px;
   height: 100%;
@@ -603,7 +558,6 @@
   top: 0;
   transform: translateX(-50%);
 }
-
 .parcel-float-shadow {
   position: absolute;
   left: 50%;

@@ -19,15 +19,15 @@ export function Phone({ children, className = "" }: { children: ReactNode; class
 export function TopBar({ title, menu = false }: { title: string; menu?: boolean }) {
   const router = useRouter();
   return (
-    <header className="flex items-center justify-between px-5 pt-6 pb-4 animate-enter-fade">
+    <header className="relative z-10 flex items-center justify-between px-5 pt-6 pb-4 animate-enter-fade">
       <button
         aria-label="Back"
         onClick={() => router.history.back()}
-        className="grid size-10 place-items-center rounded-full bg-secondary pressable transition-transform hover:scale-105"
+        className="grid size-10 place-items-center rounded-full bg-secondary pressable transition-transform hover:scale-110 hover:rotate-[-8deg]"
       >
         <ArrowLeft className="size-5" />
       </button>
-      <h1 className="text-lg font-bold">{title}</h1>
+      <h1 className="text-lg font-bold animate-text-glow">{title}</h1>
       <span className="grid size-10 place-items-center">
         {menu && <MoreHorizontal className="size-5" />}
       </span>
@@ -37,32 +37,31 @@ export function TopBar({ title, menu = false }: { title: string; menu?: boolean 
 
 export function BottomNav() {
   const item =
-    "flex flex-col items-center gap-1 text-[11px] text-muted-foreground transition-all duration-200";
+    "flex flex-col items-center gap-1 text-[11px] text-muted-foreground transition-all duration-200 hover:text-foreground";
   const active = { className: "text-foreground font-semibold" };
   return (
     <nav className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-around border-t bg-card/90 px-4 pb-5 pt-3 backdrop-blur-md animate-enter-up">
       <Link to="/home" className={item} activeProps={active}>
-        <Home className="size-5" />
+        <Home className="size-5 transition-transform duration-300 hover:scale-125" />
         Home
       </Link>
       <Link to="/track-order" className={item} activeProps={active}>
-        <Package className="size-5" />
+        <Package className="size-5 transition-transform duration-300 hover:scale-125" />
         Order
       </Link>
       <Link
         to="/send"
         aria-label="Send parcel"
-        className="-mt-8 grid size-16 place-items-center rounded-full bg-primary text-primary-foreground shadow-glow-lg animate-glow-pulse pressable transition-transform hover:scale-110"
-        style={{ transform: "translateZ(20px)" }}
+        className="energy-btn -mt-8 grid size-16 place-items-center rounded-full bg-primary text-primary-foreground shadow-glow-lg animate-glow-pulse pressable transition-transform hover:scale-110 animate-magnetic"
       >
         <Send className="size-6" />
       </Link>
       <Link to="/tracking" className={item} activeProps={active}>
-        <MapPin className="size-5" />
+        <MapPin className="size-5 transition-transform duration-300 hover:scale-125" />
         Tracking
       </Link>
       <Link to="/profile" className={item} activeProps={active}>
-        <User className="size-5" />
+        <User className="size-5 transition-transform duration-300 hover:scale-125" />
         Profile
       </Link>
     </nav>

@@ -7,6 +7,7 @@ import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { toast } from "sonner";
 import { Phone } from "@/components/app-shell";
 import { Parcel3D } from "@/components/parcel-3d";
+import { ParticleField, EnergyRings, TextReveal } from "@/components/effects";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,7 +56,6 @@ function GoogleIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function AppleIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -63,7 +63,6 @@ function AppleIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function FacebookIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="#1877F2" aria-hidden="true">
@@ -71,7 +70,6 @@ function FacebookIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
 function XIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -98,7 +96,6 @@ function AuthPage() {
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
-
   const signupForm = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
@@ -111,7 +108,6 @@ function AuthPage() {
     toast.success(`Signed in with ${provider}`);
     navigate({ to: "/home" });
   }
-
   async function onLogin(values: LoginValues) {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
@@ -119,7 +115,6 @@ function AuthPage() {
     toast.success(`Welcome back! (${values.email})`);
     navigate({ to: "/home" });
   }
-
   async function onSignup(values: SignupValues) {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
@@ -130,19 +125,24 @@ function AuthPage() {
 
   return (
     <Phone className="flex flex-col">
+      <div className="pointer-events-none absolute inset-0 aurora-bg opacity-50" />
+      <ParticleField count={20} />
       <div className="pointer-events-none absolute -left-20 top-10 size-48 rounded-full bg-primary/15 blur-3xl animate-float-slow" />
-      <div className="pointer-events-none absolute -right-16 bottom-32 size-40 rounded-full bg-accent animate-float opacity-70" />
-      <div className="pointer-events-none absolute right-4 top-16 opacity-60">
+      <div className="pointer-events-none absolute -right-16 bottom-32 size-40 rounded-full bg-accent animate-float opacity-60" />
+      <div className="pointer-events-none absolute right-2 top-12 opacity-70">
         <Parcel3D size="sm" variant="tilt" />
       </div>
+      <div className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 opacity-30">
+        <EnergyRings size={180} />
+      </div>
 
-      <div className="relative flex flex-1 flex-col px-6 pb-10 pt-10">
+      <div className="relative z-10 flex flex-1 flex-col px-6 pb-10 pt-10">
         <div className="mb-8 text-center animate-enter-3d">
-          <div className="mx-auto mb-4 grid size-14 place-items-center rounded-2xl bg-primary text-2xl font-extrabold text-primary-foreground shadow-glow-lg animate-glow-pulse">
+          <div className="energy-btn mx-auto mb-4 grid size-14 place-items-center rounded-2xl bg-primary text-2xl font-extrabold text-primary-foreground shadow-glow-lg animate-glow-pulse">
             P
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight">
-            {mode === "login" ? "Welcome back" : "Create account"}
+          <h1 className="text-2xl font-extrabold tracking-tight animate-text-glow">
+            <TextReveal text={mode === "login" ? "Welcome back" : "Create account"} />
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
             {mode === "login"
@@ -160,7 +160,7 @@ function AuthPage() {
               onClick={() => simulateAuth(label)}
               className={cn(
                 "flex h-12 items-center justify-center gap-2.5 rounded-2xl border bg-card text-sm font-medium shadow-sm",
-                "transition-all hover-tilt pressable disabled:opacity-50",
+                "transition-all hover-tilt pressable disabled:opacity-50 neon-border",
                 `animate-enter-scale stagger-${i + 1}`,
               )}
             >
@@ -178,24 +178,10 @@ function AuthPage() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <Tabs
-          value={mode}
-          onValueChange={(v) => setMode(v as "login" | "signup")}
-          className="w-full animate-enter-up stagger-3"
-        >
+        <Tabs value={mode} onValueChange={(v) => setMode(v as "login" | "signup")} className="w-full animate-enter-up stagger-3">
           <TabsList className="mb-5 grid h-11 w-full grid-cols-2 rounded-2xl bg-secondary p-1">
-            <TabsTrigger
-              value="login"
-              className="rounded-xl data-[state=active]:bg-card data-[state=active]:shadow-sm"
-            >
-              Log in
-            </TabsTrigger>
-            <TabsTrigger
-              value="signup"
-              className="rounded-xl data-[state=active]:bg-card data-[state=active]:shadow-sm"
-            >
-              Sign up
-            </TabsTrigger>
+            <TabsTrigger value="login" className="rounded-xl data-[state=active]:bg-card data-[state=active]:shadow-sm">Log in</TabsTrigger>
+            <TabsTrigger value="signup" className="rounded-xl data-[state=active]:bg-card data-[state=active]:shadow-sm">Sign up</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login" className="mt-0 space-y-4">
@@ -204,58 +190,27 @@ function AuthPage() {
                 <Label htmlFor="login-email">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="login-email"
-                    type="email"
-                    placeholder="you@example.com"
-                    autoComplete="email"
-                    className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow"
-                    {...loginForm.register("email")}
-                  />
+                  <Input id="login-email" type="email" placeholder="you@example.com" autoComplete="email" className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow" {...loginForm.register("email")} />
                 </div>
-                {loginForm.formState.errors.email && (
-                  <p className="text-xs text-destructive">{loginForm.formState.errors.email.message}</p>
-                )}
+                {loginForm.formState.errors.email && <p className="text-xs text-destructive">{loginForm.formState.errors.email.message}</p>}
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="login-password">Password</Label>
-                  <button
-                    type="button"
-                    className="text-xs font-medium text-primary hover:underline"
-                    onClick={() => toast.message("Password reset link would be sent here")}
-                  >
+                  <button type="button" className="text-xs font-medium text-primary hover:underline" onClick={() => toast.message("Password reset link would be sent here")}>
                     Forgot password?
                   </button>
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="login-password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    autoComplete="current-password"
-                    className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow"
-                    {...loginForm.register("password")}
-                  />
-                  <button
-                    type="button"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    onClick={() => setShowPassword((s) => !s)}
-                  >
+                  <Input id="login-password" type={showPassword ? "text" : "password"} placeholder="••••••••" autoComplete="current-password" className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow" {...loginForm.register("password")} />
+                  <button type="button" aria-label={showPassword ? "Hide password" : "Show password"} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" onClick={() => setShowPassword((s) => !s)}>
                     {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                   </button>
                 </div>
-                {loginForm.formState.errors.password && (
-                  <p className="text-xs text-destructive">{loginForm.formState.errors.password.message}</p>
-                )}
+                {loginForm.formState.errors.password && <p className="text-xs text-destructive">{loginForm.formState.errors.password.message}</p>}
               </div>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="h-12 w-full rounded-2xl text-base font-semibold shadow-glow-lg animate-glow-pulse pressable"
-              >
+              <Button type="submit" disabled={loading} className="energy-btn h-12 w-full rounded-2xl text-base font-semibold shadow-glow-lg animate-glow-pulse pressable animate-magnetic">
                 {loading ? "Signing in…" : "Log in"}
               </Button>
             </form>
@@ -267,91 +222,41 @@ function AuthPage() {
                 <Label htmlFor="signup-name">Full name</Label>
                 <div className="relative">
                   <User className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="signup-name"
-                    type="text"
-                    placeholder="Brandon D."
-                    autoComplete="name"
-                    className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow"
-                    {...signupForm.register("name")}
-                  />
+                  <Input id="signup-name" type="text" placeholder="Brandon D." autoComplete="name" className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow" {...signupForm.register("name")} />
                 </div>
-                {signupForm.formState.errors.name && (
-                  <p className="text-xs text-destructive">{signupForm.formState.errors.name.message}</p>
-                )}
+                {signupForm.formState.errors.name && <p className="text-xs text-destructive">{signupForm.formState.errors.name.message}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signup-email">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="you@example.com"
-                    autoComplete="email"
-                    className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow"
-                    {...signupForm.register("email")}
-                  />
+                  <Input id="signup-email" type="email" placeholder="you@example.com" autoComplete="email" className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow" {...signupForm.register("email")} />
                 </div>
-                {signupForm.formState.errors.email && (
-                  <p className="text-xs text-destructive">{signupForm.formState.errors.email.message}</p>
-                )}
+                {signupForm.formState.errors.email && <p className="text-xs text-destructive">{signupForm.formState.errors.email.message}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signup-password">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="signup-password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                    className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow"
-                    {...signupForm.register("password")}
-                  />
-                  <button
-                    type="button"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    onClick={() => setShowPassword((s) => !s)}
-                  >
+                  <Input id="signup-password" type={showPassword ? "text" : "password"} placeholder="••••••••" autoComplete="new-password" className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow" {...signupForm.register("password")} />
+                  <button type="button" aria-label={showPassword ? "Hide password" : "Show password"} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" onClick={() => setShowPassword((s) => !s)}>
                     {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                   </button>
                 </div>
-                {signupForm.formState.errors.password && (
-                  <p className="text-xs text-destructive">{signupForm.formState.errors.password.message}</p>
-                )}
+                {signupForm.formState.errors.password && <p className="text-xs text-destructive">{signupForm.formState.errors.password.message}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="signup-confirm">Confirm password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="signup-confirm"
-                    type={showConfirm ? "text" : "password"}
-                    placeholder="••••••••"
-                    autoComplete="new-password"
-                    className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow"
-                    {...signupForm.register("confirmPassword")}
-                  />
-                  <button
-                    type="button"
-                    aria-label={showConfirm ? "Hide password" : "Show password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    onClick={() => setShowConfirm((s) => !s)}
-                  >
+                  <Input id="signup-confirm" type={showConfirm ? "text" : "password"} placeholder="••••••••" autoComplete="new-password" className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow" {...signupForm.register("confirmPassword")} />
+                  <button type="button" aria-label={showConfirm ? "Hide password" : "Show password"} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" onClick={() => setShowConfirm((s) => !s)}>
                     {showConfirm ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                   </button>
                 </div>
-                {signupForm.formState.errors.confirmPassword && (
-                  <p className="text-xs text-destructive">{signupForm.formState.errors.confirmPassword.message}</p>
-                )}
+                {signupForm.formState.errors.confirmPassword && <p className="text-xs text-destructive">{signupForm.formState.errors.confirmPassword.message}</p>}
               </div>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="h-12 w-full rounded-2xl text-base font-semibold shadow-glow-lg animate-glow-pulse pressable"
-              >
+              <Button type="submit" disabled={loading} className="energy-btn h-12 w-full rounded-2xl text-base font-semibold shadow-glow-lg animate-glow-pulse pressable animate-magnetic">
                 {loading ? "Creating account…" : "Create account"}
               </Button>
             </form>
@@ -360,18 +265,11 @@ function AuthPage() {
 
         <p className="mt-6 text-center text-xs text-muted-foreground animate-enter-fade stagger-4">
           By continuing you agree to our{" "}
-          <button type="button" className="font-medium text-foreground underline-offset-2 hover:underline">
-            Terms
-          </button>{" "}and{" "}
-          <button type="button" className="font-medium text-foreground underline-offset-2 hover:underline">
-            Privacy Policy
-          </button>
-          .
+          <button type="button" className="font-medium text-foreground underline-offset-2 hover:underline">Terms</button>{" "}and{" "}
+          <button type="button" className="font-medium text-foreground underline-offset-2 hover:underline">Privacy Policy</button>.
         </p>
         <p className="mt-4 text-center text-sm text-muted-foreground animate-enter-fade stagger-5">
-          <Link to="/" className="font-medium text-primary hover:underline">
-            ← Back to welcome
-          </Link>
+          <Link to="/" className="font-medium text-primary hover:underline">← Back to welcome</Link>
         </p>
       </div>
     </Phone>
