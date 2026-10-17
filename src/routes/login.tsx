@@ -141,10 +141,13 @@ function AuthPage() {
 
   return (
     <Phone className="flex flex-col">
+      {/* Ambient glow orbs */}
+      <div className="pointer-events-none absolute -left-20 top-10 size-48 rounded-full bg-primary/15 blur-3xl animate-float-slow" />
+      <div className="pointer-events-none absolute -right-16 bottom-32 size-40 rounded-full bg-accent animate-float opacity-70" />
+
       <div className="relative flex flex-1 flex-col px-6 pb-10 pt-10">
-        {/* Brand header */}
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 grid size-14 place-items-center rounded-2xl bg-primary text-2xl font-extrabold text-primary-foreground shadow-glow">
+        <div className="mb-8 text-center animate-enter-up">
+          <div className="mx-auto mb-4 grid size-14 place-items-center rounded-2xl bg-primary text-2xl font-extrabold text-primary-foreground shadow-glow animate-glow-pulse">
             P
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight">
@@ -157,17 +160,17 @@ function AuthPage() {
           </p>
         </div>
 
-        {/* Social providers */}
-        <div className="grid grid-cols-2 gap-3">
-          {socialProviders.map(({ id, label, Icon }) => (
+        <div className="grid grid-cols-2 gap-3 animate-enter-up stagger-1">
+          {socialProviders.map(({ id, label, Icon }, i) => (
             <button
               key={id}
               type="button"
               disabled={loading}
               onClick={() => simulateAuth(label)}
               className={cn(
-                "flex h-12 items-center justify-center gap-2.5 rounded-2xl border bg-card text-sm font-medium shadow-sm transition-colors",
-                "hover:bg-secondary disabled:opacity-50",
+                "flex h-12 items-center justify-center gap-2.5 rounded-2xl border bg-card text-sm font-medium shadow-sm",
+                "transition-all hover:bg-secondary hover:shadow-soft hover:-translate-y-0.5 pressable disabled:opacity-50",
+                `animate-enter-scale stagger-${i + 1}`,
               )}
             >
               <Icon className="size-5 shrink-0" />
@@ -176,8 +179,7 @@ function AuthPage() {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="my-6 flex items-center gap-3">
+        <div className="my-6 flex items-center gap-3 animate-enter-fade stagger-2">
           <div className="h-px flex-1 bg-border" />
           <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
             or continue with email
@@ -185,11 +187,10 @@ function AuthPage() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        {/* Tabs: Login / Sign up */}
         <Tabs
           value={mode}
           onValueChange={(v) => setMode(v as "login" | "signup")}
-          className="w-full"
+          className="w-full animate-enter-up stagger-3"
         >
           <TabsList className="mb-5 grid h-11 w-full grid-cols-2 rounded-2xl bg-secondary p-1">
             <TabsTrigger
@@ -217,7 +218,7 @@ function AuthPage() {
                     type="email"
                     placeholder="you@example.com"
                     autoComplete="email"
-                    className="h-12 rounded-2xl pl-10"
+                    className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow"
                     {...loginForm.register("email")}
                   />
                 </div>
@@ -246,7 +247,7 @@ function AuthPage() {
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     autoComplete="current-password"
-                    className="h-12 rounded-2xl pl-10 pr-11"
+                    className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow"
                     {...loginForm.register("password")}
                   />
                   <button
@@ -268,7 +269,7 @@ function AuthPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="h-12 w-full rounded-2xl text-base font-semibold shadow-glow"
+                className="h-12 w-full rounded-2xl text-base font-semibold shadow-glow animate-glow-pulse pressable"
               >
                 {loading ? "Signing in…" : "Log in"}
               </Button>
@@ -286,7 +287,7 @@ function AuthPage() {
                     type="text"
                     placeholder="Brandon D."
                     autoComplete="name"
-                    className="h-12 rounded-2xl pl-10"
+                    className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow"
                     {...signupForm.register("name")}
                   />
                 </div>
@@ -306,7 +307,7 @@ function AuthPage() {
                     type="email"
                     placeholder="you@example.com"
                     autoComplete="email"
-                    className="h-12 rounded-2xl pl-10"
+                    className="h-12 rounded-2xl pl-10 transition-shadow focus-visible:shadow-glow"
                     {...signupForm.register("email")}
                   />
                 </div>
@@ -326,7 +327,7 @@ function AuthPage() {
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     autoComplete="new-password"
-                    className="h-12 rounded-2xl pl-10 pr-11"
+                    className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow"
                     {...signupForm.register("password")}
                   />
                   <button
@@ -354,7 +355,7 @@ function AuthPage() {
                     type={showConfirm ? "text" : "password"}
                     placeholder="••••••••"
                     autoComplete="new-password"
-                    className="h-12 rounded-2xl pl-10 pr-11"
+                    className="h-12 rounded-2xl pl-10 pr-11 transition-shadow focus-visible:shadow-glow"
                     {...signupForm.register("confirmPassword")}
                   />
                   <button
@@ -376,7 +377,7 @@ function AuthPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="h-12 w-full rounded-2xl text-base font-semibold shadow-glow"
+                className="h-12 w-full rounded-2xl text-base font-semibold shadow-glow animate-glow-pulse pressable"
               >
                 {loading ? "Creating account…" : "Create account"}
               </Button>
@@ -384,18 +385,24 @@ function AuthPage() {
           </TabsContent>
         </Tabs>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">
+        <p className="mt-6 text-center text-xs text-muted-foreground animate-enter-fade stagger-4">
           By continuing you agree to our{" "}
-          <button type="button" className="font-medium text-foreground underline-offset-2 hover:underline">
+          <button
+            type="button"
+            className="font-medium text-foreground underline-offset-2 hover:underline"
+          >
             Terms
           </button>{" "}and{" "}
-          <button type="button" className="font-medium text-foreground underline-offset-2 hover:underline">
+          <button
+            type="button"
+            className="font-medium text-foreground underline-offset-2 hover:underline"
+          >
             Privacy Policy
           </button>
           .
         </p>
 
-        <p className="mt-4 text-center text-sm text-muted-foreground">
+        <p className="mt-4 text-center text-sm text-muted-foreground animate-enter-fade stagger-5">
           <Link to="/" className="font-medium text-primary hover:underline">
             ← Back to welcome
           </Link>

@@ -38,6 +38,22 @@
   --color-map-block: var(--map-block);
   --shadow-soft: 0 10px 30px -12px oklch(0.2 0 0 / 0.18);
   --shadow-glow: 0 12px 28px -8px color-mix(in oklab, var(--primary) 55%, transparent);
+  --shadow-glow-lg: 0 0 40px -4px color-mix(in oklab, var(--primary) 45%, transparent),
+    0 12px 32px -10px color-mix(in oklab, var(--primary) 35%, transparent);
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-float-slow: float 7s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 2.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.2s linear infinite;
+  --animate-enter-up: enter-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-enter-scale: enter-scale 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-enter-fade: enter-fade 0.45s ease-out both;
+  --animate-route-dash: route-dash 1.4s linear infinite;
+  --animate-scan-line: scan-line 2s ease-in-out infinite;
+  --animate-orbit: orbit 8s linear infinite;
+  --animate-ping-soft: ping-soft 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-bounce-soft: bounce-soft 2.5s ease-in-out infinite;
+  --animate-gradient: gradient-shift 6s ease infinite;
+  --animate-spin-slow: spin 12s linear infinite;
 }
 
 :root {
@@ -69,7 +85,9 @@
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
+  * {
+    border-color: var(--color-border);
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -77,10 +95,322 @@
   }
 }
 
+/* ========== Keyframes ========== */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 16px -4px color-mix(in oklab, var(--primary) 40%, transparent),
+      0 8px 24px -8px color-mix(in oklab, var(--primary) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 32px -2px color-mix(in oklab, var(--primary) 65%, transparent),
+      0 12px 36px -6px color-mix(in oklab, var(--primary) 50%, transparent);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes scan-line {
+  0%,
+  100% {
+    top: 12%;
+    opacity: 0.3;
+  }
+  50% {
+    top: 82%;
+    opacity: 1;
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  75%,
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes blob-morph {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes progress-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ========== Utilities ========== */
 @utility pattern-ink {
   background-color: var(--ink);
   background-image:
     linear-gradient(135deg, oklch(1 0 0 / 0.05) 25%, transparent 25%),
     linear-gradient(225deg, oklch(1 0 0 / 0.05) 25%, transparent 25%);
   background-size: 48px 48px;
+}
+
+@utility animate-float {
+  animation: var(--animate-float);
+}
+
+@utility animate-float-slow {
+  animation: var(--animate-float-slow);
+}
+
+@utility animate-glow-pulse {
+  animation: var(--animate-glow-pulse);
+}
+
+@utility animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--primary) 25%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+@utility animate-enter-up {
+  animation: var(--animate-enter-up);
+}
+
+@utility animate-enter-scale {
+  animation: var(--animate-enter-scale);
+}
+
+@utility animate-enter-fade {
+  animation: var(--animate-enter-fade);
+}
+
+@utility animate-route-dash {
+  animation: var(--animate-route-dash);
+}
+
+@utility animate-scan-line {
+  animation: var(--animate-scan-line);
+}
+
+@utility animate-orbit {
+  animation: var(--animate-orbit);
+}
+
+@utility animate-ping-soft {
+  animation: var(--animate-ping-soft);
+}
+
+@utility animate-bounce-soft {
+  animation: var(--animate-bounce-soft);
+}
+
+@utility animate-gradient {
+  background-size: 200% 200%;
+  animation: var(--animate-gradient);
+}
+
+@utility animate-spin-slow {
+  animation: var(--animate-spin-slow);
+}
+
+@utility animate-blob {
+  animation: blob-morph 8s ease-in-out infinite;
+}
+
+/* Stagger delays for children */
+@utility stagger-1 {
+  animation-delay: 0.05s;
+}
+@utility stagger-2 {
+  animation-delay: 0.12s;
+}
+@utility stagger-3 {
+  animation-delay: 0.2s;
+}
+@utility stagger-4 {
+  animation-delay: 0.28s;
+}
+@utility stagger-5 {
+  animation-delay: 0.36s;
+}
+@utility stagger-6 {
+  animation-delay: 0.44s;
+}
+
+/* Interactive polish */
+@utility pressable {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease;
+}
+@utility pressable {
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease;
+}
+@utility hover-lift {
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--card) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@utility neon-border {
+  position: relative;
+}
+@utility neon-border {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--primary) 70%, transparent),
+      transparent 40%,
+      transparent 60%,
+      color-mix(in oklab, var(--primary) 40%, transparent)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* Progress bar that looks alive */
+@utility progress-live {
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 70%, white),
+    var(--primary)
+  );
+  background-size: 200% 100%;
+  animation: progress-flow 1.5s linear infinite;
+}
+
+/* Respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

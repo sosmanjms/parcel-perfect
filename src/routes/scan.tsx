@@ -19,17 +19,34 @@ function Scan() {
   return (
     <Phone>
       <TopBar title="Box Scan" menu />
-      <div className="px-6 pt-4 text-center">
-        <div className="relative mx-auto aspect-square w-full max-w-xs rounded-3xl bg-secondary p-6">
-          {["left-3 top-3 border-l-4 border-t-4 rounded-tl-2xl", "right-3 top-3 border-r-4 border-t-4 rounded-tr-2xl", "left-3 bottom-3 border-l-4 border-b-4 rounded-bl-2xl", "right-3 bottom-3 border-r-4 border-b-4 rounded-br-2xl"].map((c) => (
+      <div className="px-6 pt-4 text-center animate-enter-up">
+        <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-3xl bg-secondary p-6 neon-border">
+          {[
+            "left-3 top-3 border-l-4 border-t-4 rounded-tl-2xl",
+            "right-3 top-3 border-r-4 border-t-4 rounded-tr-2xl",
+            "left-3 bottom-3 border-l-4 border-b-4 rounded-bl-2xl",
+            "right-3 bottom-3 border-r-4 border-b-4 rounded-br-2xl",
+          ].map((c) => (
             <span key={c} className={`absolute size-10 border-primary ${c}`} />
           ))}
-          <img src={boxPin} alt="Parcel" className="h-full w-full object-contain opacity-80" />
-          <span className="absolute inset-x-6 top-1/2 h-0.5 animate-pulse bg-primary" />
+          <img
+            src={boxPin}
+            alt="Parcel"
+            className="h-full w-full object-contain opacity-80 animate-float"
+          />
+          {/* Futuristic scan laser */}
+          <span className="absolute inset-x-8 h-0.5 bg-primary shadow-[0_0_12px_2px] shadow-primary/80 animate-scan-line" />
+          <span className="absolute inset-x-6 h-8 bg-gradient-to-b from-primary/20 to-transparent animate-scan-line pointer-events-none" />
         </div>
-        <p className="mt-6 text-muted-foreground">Align the code on the box inside the frame</p>
-        <Link to="/tracking" className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-ink py-4 font-semibold text-ink-foreground">
-          <ScanLine className="size-5" />Scan box
+        <p className="mt-6 text-muted-foreground animate-enter-fade stagger-2">
+          Align the code on the box inside the frame
+        </p>
+        <Link
+          to="/tracking"
+          className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-ink py-4 font-semibold text-ink-foreground pressable shadow-glow animate-enter-up stagger-3 hover:scale-[1.02] transition-transform"
+        >
+          <ScanLine className="size-5" />
+          Scan box
         </Link>
       </div>
     </Phone>
